@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "trajet.h"
+#include "Trajet.h"
 using namespace std;
 
 
@@ -9,13 +9,17 @@ Trajet::Trajet(const char* pVilleDep, const char* pVilleArr) {
     strcpy(villeDep, pVilleDep);
     villeArr = new char[strlen(pVilleArr)+1];
     strcpy(villeArr, pVilleArr);
+    cout << "Construction Trajet" << "\r\n";
 }
 
-virtual Trajet::~Trajet() {
+Trajet::Trajet() {}
+
+Trajet::~Trajet() {
     delete[] villeDep;
     delete[] villeArr;
+    cout << "Destruction Trajet" << "\r\n";
 }
 
 void Trajet::afficher() const {
-    cout << "de " << villeDep << " a " << villeArr < " ";
+    cout << "de " << villeDep << " a " << villeArr << " ";
 }
