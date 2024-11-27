@@ -5,11 +5,15 @@
 
 class Trajet {
 protected:
-    const char* villeDep;
-    const char* villeArr;
+    char* villeDep;
+    char* villeArr;
+    int longeur;
 public:
     Trajet(const char* pVilleDep, const char* pVilleArr);
     virtual ~Trajet();
-    void afficher();
+    void afficher() const;
+    char* getVilleDep() const;
+    char* getVilleArr() const;
+
 };
 #endif
