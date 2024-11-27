@@ -16,6 +16,6 @@ virtual Trajet::~Trajet() {
     delete[] villeArr;
 }
 
-void Trajet::Afficher() const {
+void Trajet::afficher() const {
     cout << "de " << villeDep << " a " << villeArr < " ";
 }
