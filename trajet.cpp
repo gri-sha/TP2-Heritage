@@ -12,8 +12,6 @@ Trajet::Trajet(const char* pVilleDep, const char* pVilleArr) {
     cout << "Construction Trajet" << "\r\n";
 }
 
-Trajet::Trajet() {}
-
 Trajet::~Trajet() {
     delete[] villeDep;
     delete[] villeArr;
