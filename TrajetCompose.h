@@ -3,13 +3,14 @@
 #include <istream>
 #include <cstring>
 #include "Trajet.h"
+#include "TrajetSimple.h"
 
 class TrajetCompose: public Trajet {
 protected:
-    Trajet* listTrajets;
-    char* moyens[];
+    TrajetSimple** listTrajets;
+    int nbTrajets;
 public:
-    TrajetCompose(const char* pVilleDep, const char* pVilleArr, const char* pMoyen);
+    TrajetCompose(const char* villeDep, const char* villeArr, TrajetSimple* listTrajets[], int nbTrajets);
     virtual ~TrajetCompose();
     virtual void afficher() const;
 };
