@@ -14,7 +14,8 @@ Catalogue::~Catalogue() {
     delete[] catalogue;
 }
 
-void Catalogue::AjouterTrajetSimple(TrajetSimple* trajet) {
+void Catalogue::ajouterTrajetSimple(TrajetSimple* trajet) {
+    // gestion de la memoire 
     if (nbTrajets == capacite) {
         capacite *= 2;
         Trajet** tmp = new Trajet*[capacite];
@@ -24,21 +25,35 @@ void Catalogue::AjouterTrajetSimple(TrajetSimple* trajet) {
         delete[] catalogue;
         catalogue = tmp;
     }
+    // ajout du trajet
     catalogue[nbTrajets++] = trajet;
 }
 
-void Catalogue::AjouterTrajetCompose(TrajetCompose* trajet) {
-    AjouterTrajetSimple(trajet);
+void Catalogue::ajouterTrajetCompose(TrajetCompose* trajet) {
+    // gestion de la memoire 
+    if (nbTrajets == capacite) {
+        capacite *= 2;
+        Trajet** tmp = new Trajet*[capacite];
+        for (int i = 0; i < nbTrajets; ++i) {
+            tmp[i] = catalogue[i];
+        }
+        delete[] catalogue;
+        catalogue = tmp;
+    }
+    // ajout du trajet
+    catalogue[nbTrajets++] = trajet;
 }
 
-void Catalogue::Afficher() const {
+void Catalogue::afficher() const {
     for (int i = 0; i < nbTrajets; ++i) {
         cout << i+1 << " : ";
-        catalogue[i]->Afficher();
+        catalogue[i]->afficher();
+        cout<<"\r\n";
     }
 }
 
-bool Catalogue::SupprimerTrajet(int index) {
+bool Catalogue::supprimerTrajet(int index) {
+    index-=1;
     if (index < 0 || index >= nbTrajets) {
         return false;
     }
@@ -49,3 +64,22 @@ bool Catalogue::SupprimerTrajet(int index) {
     nbTrajets--;
     return true;
 }
+
+
+void Catalogue::rechercher(const char* villeDepart, const char* villeArrivee) const {
+    cout << "Recherche de trajets de " << villeDepart << " a " << villeArrivee << ":" << "\r\n";
+    bool trajetTrouve = false;
+
+    for (int i = 0; i < nbTrajets; ++i) {
+        if (strcmp(catalogue[i]->getVilleDepart(), villeDepart) == 0 && 
+            strcmp(catalogue[i]->getVilleArrivee(), villeArrivee) == 0) {
+            trajetTrouve = true;
+            catalogue[i]->afficher(); 
+        }
+    }
+
+    if (!trajetTrouve) {
+        cout << "Aucun trajet trouve pour cette recherche." << "\r\n";
+    }
+}
+

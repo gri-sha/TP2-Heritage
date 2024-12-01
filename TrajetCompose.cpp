@@ -8,11 +8,11 @@ TrajetCompose::TrajetCompose(const char* villeDep, const char* villeArr, TrajetS
     nbTrajets = pNbTrajets;
     listTrajets = new TrajetSimple*[nbTrajets]; 
 
-    for (int i = 0; i < longeur; ++i) {
+    for (int i = 0; i < nbTrajets; ++i) {
         listTrajets[i] = pListTrajets[i];
     }
 
-    cout << "Construction TrajetComposee" << "\r\n";
+    cout << "Construction TrajetCompose" << "\r\n";
 }
 
 TrajetCompose::~TrajetCompose() {
@@ -20,16 +20,23 @@ TrajetCompose::~TrajetCompose() {
         delete listTrajets[i]; 
     }
     delete[] listTrajets; 
-    cout << "Destruction TrajetComposee" << "\r\n";
+    cout << "Destruction TrajetCompose" << "\r\n";
 }
 
-void TrajetCompose::afficher() const 
-{
+void TrajetCompose::afficher() const {
+
+    // cout<<"Trajet compose : \r\n";
+
     for (int i = 0; i < nbTrajets; ++i) {
-        listTrajets[i]->afficher(); 
-        if (i < nbTrajets - 1) {
-            cout << " - ";
+        if (listTrajets[i] != nullptr) {
+            listTrajets[i]->afficher(); 
+            if (i < nbTrajets-1) {
+                cout << " - ";
+            }
+        } else {
+            cout << "Sous-trajet null trouve!" <<"\r\n";
         }
     }
-    cout << endl;
+    
+    cout <<"\r\n";
 }

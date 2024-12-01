@@ -3,16 +3,19 @@
 
 #include "trajetSimple.h"
 #include "trajetCompose.h"
+#include "trajet.h"
 
 class Catalogue {
 public:
     Catalogue();
     ~Catalogue();
 
-    void AjouterTrajetSimple(TrajetSimple* trajet);
-    void AjouterTrajetCompose(TrajetCompose* trajet);
-    void Afficher() const;
-    bool SupprimerTrajet(int index);
+    void ajouterTrajetSimple(TrajetSimple* trajet);
+    void ajouterTrajetCompose(TrajetCompose* trajet);
+    void afficher() const;
+    bool supprimerTrajet(int index);
+    void rechercher(const char* villeDepart, const char* villeArrivee) const;
+    
 
 private:
     Trajet** catalogue;
