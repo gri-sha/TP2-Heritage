@@ -11,9 +11,9 @@ protected:
 public:
     Trajet(const char* pVilleDep, const char* pVilleArr);
     virtual ~Trajet();
-    void afficher() const;
-    char* getVilleDep() const;
-    char* getVilleArr() const;
+    virtual void afficher() const;
+    char* getVilleDepart() const;
+    char* getVilleArrivee() const;
 
 };
 #endif
