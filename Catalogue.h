@@ -1,7 +1,6 @@
 #ifndef CATALOGUE_H
 #define CATALOGUE_H
 
-// !
 #include "trajetSimple.h"
 #include "trajetCompose.h"
 #include "trajet.h"

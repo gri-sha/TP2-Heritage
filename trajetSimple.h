@@ -2,7 +2,7 @@
 #define TRAJET_SIMPLE_H
 #include <istream>
 #include <cstring>
-#include "Trajet.h"
+#include "trajet.h"
 
 class TrajetSimple: public Trajet {
 protected:

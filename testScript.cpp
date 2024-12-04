@@ -2,8 +2,8 @@
 #include <cstring>
 #include "trajet.h"
 #include "trajetSimple.h"
-#include "TrajetCompose.h"
-#include "Catalogue.h"
+#include "trajetCompose.h"
+#include "catalogue.h"
 using namespace std;
 
 bool trajet = false;
@@ -93,7 +93,7 @@ int main(){
         cin >> moyen;
         TrajetSimple ts = TrajetSimple(villeDep.c_str(), villeArr.c_str(), moyen.c_str());
         cout << "Trajet simple ajoute !" << endl;
-        cat.ajouterTrajetSimple(&ts);
+        cat.ajouterTrajet(&ts);
 
         // trajet composé
         int nbSousTrajets;
@@ -115,7 +115,7 @@ int main(){
         }
         TrajetCompose tc = TrajetCompose(villeDepPrincipale.c_str(), villeArrPrincipale.c_str(), sousTrajets, nbSousTrajets);
         cout << "Trajet compose ajoute !" << endl;
-        cat.ajouterTrajetCompose(&tc);
+        cat.ajouterTrajet(&tc);
 
         cat.afficher();
     

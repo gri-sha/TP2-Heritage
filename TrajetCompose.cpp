@@ -1,5 +1,5 @@
 #include <iostream>
-#include "TrajetCompose.h"
+#include "trajetCompose.h"
 using namespace std;
 
 TrajetCompose::TrajetCompose(const char* villeDep, const char* villeArr, TrajetSimple* pListTrajets[], int pNbTrajets) 
@@ -12,7 +12,7 @@ TrajetCompose::TrajetCompose(const char* villeDep, const char* villeArr, TrajetS
         listTrajets[i] = pListTrajets[i];
     }
 
-    cout << "Construction TrajetCompose" << "\r\n";
+    // cout << "Construction TrajetCompose" << "\r\n";
 }
 
 TrajetCompose::~TrajetCompose() {
@@ -20,7 +20,7 @@ TrajetCompose::~TrajetCompose() {
         delete listTrajets[i]; 
     }
     delete[] listTrajets; 
-    cout << "Destruction TrajetCompose" << "\r\n";
+    // cout << "Destruction TrajetCompose" << "\r\n";
 }
 
 void TrajetCompose::afficher() const {
