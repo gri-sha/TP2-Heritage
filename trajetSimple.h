@@ -11,5 +11,6 @@ public:
     TrajetSimple(const char* pVilleDep, const char* pVilleArr, const char* pMoyen);
     virtual ~TrajetSimple();
     virtual void afficher() const;
+    char* getMoyen() const;
 };
 #endif

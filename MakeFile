@@ -1,0 +1,36 @@
+# Compiler
+CXX = g++
+
+# Compiler flags
+CXXFLAGS = -c -ansi -pedantic -Wall -std=c++11
+
+# Directories
+SRC_DIR = .
+BIN_DIR = bin
+
+# Source files
+SRC_FILES = main.cpp trajet.cpp trajetSimple.cpp trajetCompose.cpp catalogue.cpp
+
+# Object files
+OBJ_FILES = $(patsubst %.cpp,$(BIN_DIR)/%.o,$(SRC_FILES))
+
+# Executable name
+EXECUTABLE = $(BIN_DIR)/programme
+
+# Default target
+all: $(EXECUTABLE)
+
+# Rule to link object files into the final executable
+$(EXECUTABLE): $(OBJ_FILES)
+	$(CXX) $^ -o $@
+
+# Rule to compile source files into object files
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+# Clean target to remove compiled files
+clean:
+	rm -f $(BIN_DIR)/*.o $(EXECUTABLE)
+
+# Phony targets
+.PHONY: all clean
