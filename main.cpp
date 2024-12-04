@@ -36,7 +36,7 @@ int main() {
             cin >> villeArr;
             cout << "Moyen de transport : ";
             cin >> moyen;
-            catalogue.ajouterTrajetSimple(new TrajetSimple(villeDep.c_str(), villeArr.c_str(), moyen.c_str()));
+            catalogue.ajouterTrajet(new TrajetSimple(villeDep.c_str(), villeArr.c_str(), moyen.c_str()));
             cout << "Trajet simple ajoute !" << "\r\n";
             break;
         }
@@ -62,7 +62,7 @@ int main() {
                 sousTrajets[i] = new TrajetSimple(villeDep.c_str(), villeArr.c_str(), moyen.c_str());
             }
 
-            catalogue.ajouterTrajetCompose(new TrajetCompose(villeDepPrincipale.c_str(), villeArrPrincipale.c_str(), sousTrajets, nbSousTrajets));
+            catalogue.ajouterTrajet(new TrajetCompose(villeDepPrincipale.c_str(), villeArrPrincipale.c_str(), sousTrajets, nbSousTrajets));
             cout << "Trajet compose ajoute !" << "\r\n";
             break;
         }

@@ -2,8 +2,8 @@
 #define TRAJET_COMPOSE_H
 #include <istream>
 #include <cstring>
-#include "Trajet.h"
-#include "TrajetSimple.h"
+#include "trajet.h"
+#include "trajetSimple.h"
 
 class TrajetCompose: public Trajet {
 protected:
