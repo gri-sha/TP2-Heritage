@@ -6,29 +6,32 @@
 #include "trajetCompose.h"
 using namespace std;
 
-void afficherMenu() {
-    cout << "\n=== Menu Catalogue ===" << "\r\n";
-    cout << "1. Ajouter un trajet simple" << "\r\n";
-    cout << "2. Ajouter un trajet compose" << "\r\n";
-    cout << "3. Supprimer un trajet" << "\r\n";
-    cout << "4. Afficher le catalogue" << "\r\n";
-    cout << "5. Rechercher un trajet" << "\r\n";
-    cout << "6. Quitter" << "\r\n";
-    cout << "Choisissez une option : ";
+void afficherMenu(int status) {
+        if (status) {
+            cout << "\n=== Menu Catalogue ===" << "\r\n";
+            cout << "1. Ajouter un trajet simple" << "\r\n";
+            cout << "2. Ajouter un trajet compose" << "\r\n";
+            cout << "3. Supprimer un trajet" << "\r\n";
+            cout << "4. Afficher le catalogue" << "\r\n";
+            cout << "5. Rechercher un trajet" << "\r\n";
+            cout << "6. Quitter" << "\r\n";
+            cout << "Choisissez une option : ";
+        }
 }
 
 int main() {
     Catalogue catalogue;
-    int choix;
+    char choix;
+    int status = 1;
 
     do {
-        afficherMenu();
+        afficherMenu(status);
         cin >> choix;
 
         switch (choix) {
 
         // Ajouter un trajet simple
-        case 1: { 
+        case '1': { 
             string villeDep, villeArr, moyen;
             cout << "Ville de depart : ";
             cin >> villeDep;
@@ -38,11 +41,12 @@ int main() {
             cin >> moyen;
             catalogue.ajouterTrajet(new TrajetSimple(villeDep.c_str(), villeArr.c_str(), moyen.c_str()));
             cout << "Trajet simple ajoute !" << "\r\n";
+            status = 1;
             break;
         }
 
         // Ajouter un trajet compose
-        case 2: { 
+        case '2': { 
             int nbSousTrajets;
             cout << "Nombre de sous-trajets : ";
             cin >> nbSousTrajets;
@@ -64,11 +68,12 @@ int main() {
 
             catalogue.ajouterTrajet(new TrajetCompose(villeDepPrincipale.c_str(), villeArrPrincipale.c_str(), sousTrajets, nbSousTrajets));
             cout << "Trajet compose ajoute !" << "\r\n";
+            status = 1;
             break;
         }
 
         // Supprimer un trajet
-        case 3: { 
+        case '3': { 
             int index;
             cout << "Index du trajet a supprimer (les numeros de trajets sont ceux du catalogue) : ";
             cin >> index;
@@ -77,18 +82,20 @@ int main() {
             } else {
                 cout << "Erreur : index invalide." << "\r\n";
             }
+            status = 1;
             break;
         }
 
         // Afficher le catalogue
-        case 4: { 
+        case '4': { 
             cout << "Catalogue actuel :" << "\r\n";
             catalogue.afficher();
+            status = 1;
             break;
         }
 
         // Rechercher un trajet
-        case 5: { 
+        case '5': { 
             string villeDep, villeArr;
             cout << "Ville de depart : ";
             cin >> villeDep;
@@ -96,19 +103,22 @@ int main() {
             cin >> villeArr;
             cout << "Resultats de la recherche :" << "\r\n";
             catalogue.rechercher(villeDep.c_str(), villeArr.c_str());
+            status = 1;
             break;
         }
 
         // Quitter
-        case 6: 
+        case '6': 
             cout << "Au revoir !" << "\r\n";
+            status = 1;
             break;
 
         default:
-            cout << "Option invalide. Veuillez reessayer." << "\r\n";
+            cout << "Option invalide. Veuillez reessayer : ";
+            status = 0;
             break;
         }
-    } while (choix != 6);
+    } while (choix != '6');
 
     return 0;
 }

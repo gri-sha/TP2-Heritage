@@ -54,7 +54,7 @@ void Catalogue::rechercher(const char* villeDepart, const char* villeArrivee) co
     // This algorithm is implemented considering that the graph of the possible trips is tree-type
     // i.e. without cycles
     cout << "Recherche de trajets de " << villeDepart << " a " << villeArrivee << ":" << "\r\n";
-    if (catalogue == NULL) {
+    if (catalogue == nullptr) {
         cout << "Le catalogue est vide.\r\n";
     }
     bool StartFound = false;
