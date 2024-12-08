@@ -91,14 +91,15 @@ void Catalogue::rechercher(const char *villeDepart, const char *villeArrivee) co
         cout << "Aucun trajet trouve pour cette recherche." << "\r\n";
         return;
     }
-
-    Trajet **currentPath = new Trajet *[nbTrajets];
+    // ! The space for each path will be the same
+    Trajet **currentPath = new Trajet *[nbTrajets]; // * list of pointers (to class Trajet)
     int length = 0;
+    int* lengths = new int[nbTrajets];
     // ! THE SPACE FOR ARRAY CONTAINING ALL PATHS WILL ALLOCATED DYNAMIACALLY
-    Trajet ***allPaths = nullptr;
+    Trajet ***allPaths = nullptr; // * pointer to list of pointers (to class Trajet)
     int amount = 0;
 
-    findPaths(villeDepart, villeArrivee, currentPath, &length, allPaths, &amount);
+    findPaths(villeDepart, villeArrivee, currentPath, &length, allPaths, &amount, lengths);
 
     if (amount == 0)
     {
@@ -109,11 +110,13 @@ void Catalogue::rechercher(const char *villeDepart, const char *villeArrivee) co
         cout << "Trajets trouves: " << amount << "\r\n";
         for (int i = 0; i < amount; ++i)
         {
-            cout << "Trajet " << i + 1 << " : ";
-            for (int j = 0; j < length; ++j)
+            cout << "Trajet " << i + 1 << " ("<< lengths[i] << " etapes) : ";
+
+            for (int j = 0; j < lengths[i]; ++j)
             {
                 allPaths[i][j]->afficher();
-                if (j < length - 1)
+                
+                if (j < lengths[i] - 1)
                 {
                     cout << " -> ";
                 }
@@ -128,9 +131,10 @@ void Catalogue::rechercher(const char *villeDepart, const char *villeArrivee) co
         delete[] allPaths[i];
     }
     delete[] allPaths;
+    delete[] lengths;
 }
 
-void Catalogue::findPaths(const char *currentCity, const char *destinationCity, Trajet **&currentPath, int *length, Trajet ***&allPaths, int *amount) const
+void Catalogue::findPaths(const char *currentCity, const char *destinationCity, Trajet **&currentPath, int *length, Trajet ***&allPaths, int *amount, int *&lengths) const
 {
 
     if (strcmp(currentCity, destinationCity) == 0)
@@ -150,6 +154,7 @@ void Catalogue::findPaths(const char *currentCity, const char *destinationCity, 
             allPaths = temp;
         }
         allPaths[*amount] = new Trajet *[*length];
+        lengths[*amount] = *length;
         for (int i = 0; i < *length; ++i)
         {
             allPaths[*amount][i] = currentPath[i];
@@ -165,7 +170,7 @@ void Catalogue::findPaths(const char *currentCity, const char *destinationCity, 
 
             currentPath[*length] = catalogue[i];
             (*length)++;
-            findPaths(catalogue[i]->getVilleArrivee(), destinationCity, currentPath, length, allPaths, amount);
+            findPaths(catalogue[i]->getVilleArrivee(), destinationCity, currentPath, length, allPaths, amount, lengths);
             (*length)--; //! IT IS VERY IMPORTANT TO DECREMENT THE LENGTH FOR THE NEXT ITERATIONS
         }
     }

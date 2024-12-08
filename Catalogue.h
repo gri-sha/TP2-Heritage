@@ -21,7 +21,7 @@ private:
     int capacite;
     int nbTrajets;
 
-    void findPaths(const char* currentCity, const char* destinationCity, Trajet**& currentPath, int* length, Trajet***& allPaths, int* amount) const;
+    void findPaths(const char* currentCity, const char* destinationCity, Trajet**& currentPath, int* length, Trajet***& allPaths, int* amount, int*& lengths) const;
 };
 
 #endif
