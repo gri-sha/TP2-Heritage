@@ -4,13 +4,15 @@
 #include <cstring>
 #include "trajet.h"
 
-class TrajetSimple: public Trajet {
+class TrajetSimple : public Trajet
+{
 protected:
-    char* moyen;
+    char *moyen;
+
 public:
-    TrajetSimple(const char* pVilleDep, const char* pVilleArr, const char* pMoyen);
+    TrajetSimple(const char *pVilleDep, const char *pVilleArr, const char *pMoyen);
     virtual ~TrajetSimple();
     virtual void afficher() const;
-    char* getMoyen() const;
+    char *getMoyen() const;
 };
 #endif

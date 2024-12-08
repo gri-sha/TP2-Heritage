@@ -6,32 +6,38 @@
 #include "trajetCompose.h"
 using namespace std;
 
-void afficherMenu(int status) {
-        if (status) {
-            cout << "\n=== Menu Catalogue ===" << "\r\n";
-            cout << "1. Ajouter un trajet simple" << "\r\n";
-            cout << "2. Ajouter un trajet compose" << "\r\n";
-            cout << "3. Supprimer un trajet" << "\r\n";
-            cout << "4. Afficher le catalogue" << "\r\n";
-            cout << "5. Rechercher un trajet" << "\r\n";
-            cout << "6. Quitter" << "\r\n";
-            cout << "Choisissez une option : ";
-        }
+void afficherMenu(int status)
+{
+    if (status)
+    {
+        cout << "\n=== Menu Catalogue ===" << "\r\n";
+        cout << "1. Ajouter un trajet simple" << "\r\n";
+        cout << "2. Ajouter un trajet compose" << "\r\n";
+        cout << "3. Supprimer un trajet" << "\r\n";
+        cout << "4. Afficher le catalogue" << "\r\n";
+        cout << "5. Rechercher un trajet" << "\r\n";
+        cout << "6. Quitter" << "\r\n";
+        cout << "Choisissez une option : ";
+    }
 }
 
-int main() {
+int main()
+{
     Catalogue catalogue;
     char choix;
     int status = 1;
 
-    do {
+    do
+    {
         afficherMenu(status);
         cin >> choix;
 
-        switch (choix) {
+        switch (choix)
+        {
 
         // Ajouter un trajet simple
-        case '1': { 
+        case '1':
+        {
             string villeDep, villeArr, moyen;
             cout << "Ville de depart : ";
             cin >> villeDep;
@@ -46,21 +52,25 @@ int main() {
         }
 
         // Ajouter un trajet compose
-        case '2': { 
+        case '2':
+        {
             int nbSousTrajets;
             cout << "Nombre de sous-trajets : ";
             cin >> nbSousTrajets;
 
             string villeDepPrincipale, villeArrPrincipale;
-            TrajetSimple** sousTrajets = new TrajetSimple*[nbSousTrajets];
-            for (int i = 0; i < nbSousTrajets; ++i) {
+            TrajetSimple **sousTrajets = new TrajetSimple *[nbSousTrajets];
+            for (int i = 0; i < nbSousTrajets; ++i)
+            {
                 string villeDep, villeArr, moyen;
                 cout << "Sous-trajet " << i + 1 << " - Ville de depart : ";
                 cin >> villeDep;
-                if (i==0) villeDepPrincipale = villeDep;
+                if (i == 0)
+                    villeDepPrincipale = villeDep;
                 cout << "Sous-trajet " << i + 1 << " - Ville d'arrivee : ";
                 cin >> villeArr;
-                if (i==nbSousTrajets-1) villeArrPrincipale = villeArr;
+                if (i == nbSousTrajets - 1)
+                    villeArrPrincipale = villeArr;
                 cout << "Sous-trajet " << i + 1 << " - Moyen de transport : ";
                 cin >> moyen;
                 sousTrajets[i] = new TrajetSimple(villeDep.c_str(), villeArr.c_str(), moyen.c_str());
@@ -73,13 +83,17 @@ int main() {
         }
 
         // Supprimer un trajet
-        case '3': { 
+        case '3':
+        {
             int index;
             cout << "Index du trajet a supprimer (les numeros de trajets sont ceux du catalogue) : ";
             cin >> index;
-            if (catalogue.supprimerTrajet(index)) {
+            if (catalogue.supprimerTrajet(index))
+            {
                 cout << "Trajet supprime avec succes." << "\r\n";
-            } else {
+            }
+            else
+            {
                 cout << "Erreur : index invalide." << "\r\n";
             }
             status = 1;
@@ -87,7 +101,8 @@ int main() {
         }
 
         // Afficher le catalogue
-        case '4': { 
+        case '4':
+        {
             cout << "Catalogue actuel :" << "\r\n";
             catalogue.afficher();
             status = 1;
@@ -95,7 +110,8 @@ int main() {
         }
 
         // Rechercher un trajet
-        case '5': { 
+        case '5':
+        {
             string villeDep, villeArr;
             cout << "Ville de depart : ";
             cin >> villeDep;
@@ -108,7 +124,7 @@ int main() {
         }
 
         // Quitter
-        case '6': 
+        case '6':
             cout << "Au revoir !" << "\r\n";
             status = 1;
             break;
