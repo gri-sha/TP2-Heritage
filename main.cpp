@@ -6,6 +6,9 @@
 #include "trajetCompose.h"
 using namespace std;
 
+#define VILLE_MAX 50
+#define MOYEN_MAX 30
+
 void afficherMenu(int status)
 {
     if (status)
@@ -38,14 +41,14 @@ int main()
         // Ajouter un trajet simple
         case '1':
         {
-            string villeDep, villeArr, moyen;
+            char villeDep[VILLE_MAX], villeArr[VILLE_MAX], moyen[MOYEN_MAX];
             cout << "Ville de depart : ";
             cin >> villeDep;
             cout << "Ville d'arrivee : ";
             cin >> villeArr;
             cout << "Moyen de transport : ";
             cin >> moyen;
-            catalogue.ajouterTrajet(new TrajetSimple(villeDep.c_str(), villeArr.c_str(), moyen.c_str()));
+            catalogue.ajouterTrajet(new TrajetSimple(villeDep, villeArr, moyen));
             cout << "Trajet simple ajoute !" << "\r\n";
             status = 1;
             break;
@@ -58,25 +61,35 @@ int main()
             cout << "Nombre de sous-trajets : ";
             cin >> nbSousTrajets;
 
-            string villeDepPrincipale, villeArrPrincipale;
+            char villeDepPrincipale[VILLE_MAX], villeArrPrincipale[VILLE_MAX];
             TrajetSimple **sousTrajets = new TrajetSimple *[nbSousTrajets];
             for (int i = 0; i < nbSousTrajets; ++i)
             {
-                string villeDep, villeArr, moyen;
+                char villeDep[VILLE_MAX], villeArr[VILLE_MAX], moyen[MOYEN_MAX];
+            rewrite:
                 cout << "Sous-trajet " << i + 1 << " - Ville de depart : ";
                 cin >> villeDep;
                 if (i == 0)
-                    villeDepPrincipale = villeDep;
+                    strcpy(villeDepPrincipale, villeDep);
+
                 cout << "Sous-trajet " << i + 1 << " - Ville d'arrivee : ";
                 cin >> villeArr;
                 if (i == nbSousTrajets - 1)
-                    villeArrPrincipale = villeArr;
+                    strcpy(villeArrPrincipale, villeArr);
+
                 cout << "Sous-trajet " << i + 1 << " - Moyen de transport : ";
                 cin >> moyen;
-                sousTrajets[i] = new TrajetSimple(villeDep.c_str(), villeArr.c_str(), moyen.c_str());
+
+                if (i > 0 and strcmp(sousTrajets[i - 1]->getVilleArrivee(), villeDep) != 0)
+                {
+                    cout << "Ville d'arrivee et ville de depart non coherents!" << endl;
+                    goto rewrite;
+                }
+                
+                sousTrajets[i] = new TrajetSimple(villeDep, villeArr, moyen);
             }
 
-            catalogue.ajouterTrajet(new TrajetCompose(villeDepPrincipale.c_str(), villeArrPrincipale.c_str(), sousTrajets, nbSousTrajets));
+            catalogue.ajouterTrajet(new TrajetCompose(villeDepPrincipale, villeArrPrincipale, sousTrajets, nbSousTrajets));
             cout << "Trajet compose ajoute !" << "\r\n";
             status = 1;
             break;
@@ -112,13 +125,13 @@ int main()
         // Rechercher un trajet
         case '5':
         {
-            string villeDep, villeArr;
+            char villeDep[VILLE_MAX], villeArr[VILLE_MAX];
             cout << "Ville de depart : ";
             cin >> villeDep;
             cout << "Ville d'arrivee : ";
             cin >> villeArr;
             cout << "Resultats de la recherche :" << "\r\n";
-            catalogue.rechercher(villeDep.c_str(), villeArr.c_str());
+            catalogue.rechercher(villeDep, villeArr);
             status = 1;
             break;
         }
