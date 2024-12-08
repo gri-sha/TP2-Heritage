@@ -95,7 +95,7 @@ void Catalogue::rechercher(const char *villeDepart, const char *villeArrivee) co
     Trajet **currentPath = new Trajet *[nbTrajets]; // * list of pointers (to class Trajet)
     int length = 0;
     int* lengths = new int[nbTrajets];
-    // ! THE SPACE FOR ARRAY CONTAINING ALL PATHS WILL ALLOCATED DYNAMIACALLY
+    // ! THE SPACE FOR ARRAY CONTAINING ALL PATHS WILL BE ALLOCATED DYNAMIACALLY
     Trajet ***allPaths = nullptr; // * pointer to list of pointers (to class Trajet)
     int amount = 0;
 
