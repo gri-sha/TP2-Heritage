@@ -3,17 +3,18 @@
 #include <istream>
 #include <cstring>
 
-class Trajet {
+class Trajet
+{
 protected:
-    char* villeDep;
-    char* villeArr;
+    char *villeDep;
+    char *villeArr;
     int longeur;
+
 public:
-    Trajet(const char* pVilleDep, const char* pVilleArr);
+    Trajet(const char *pVilleDep, const char *pVilleArr);
     virtual ~Trajet();
     virtual void afficher() const;
-    char* getVilleDepart() const;
-    char* getVilleArrivee() const;
-
+    char *getVilleDepart() const;
+    char *getVilleArrivee() const;
 };
 #endif
