@@ -1,36 +1,23 @@
+# List of source files
+SRCS = application.cpp Catalogue.cpp TrajetSimple.cpp Trajet.cpp TableauDynamique.cpp TrajetCompose.cpp
+
 # Compiler
-CXX = g++
+CC = g++
 
 # Compiler flags
-CXXFLAGS = -c -ansi -pedantic -Wall -std=c++11
-
-# Directories
-SRC_DIR = .
-BIN_DIR = bin
-
-# Source files
-SRC_FILES = main.cpp trajet.cpp trajetSimple.cpp trajetCompose.cpp catalogue.cpp
-
-# Object files
-OBJ_FILES = $(patsubst %.cpp,$(BIN_DIR)/%.o,$(SRC_FILES))
+CFLAGS = -ansi -pedantic -Wall -std=c++11
 
 # Executable name
-EXECUTABLE = $(BIN_DIR)/programme
+EXECUTABLE = exe
 
-# Default target
-all: $(EXECUTABLE)
+# Target: build the executable
+$(EXECUTABLE): $(SRCS:.cpp=.o)
+	$(CC) $(CFLAGS) $^ -o $(EXECUTABLE)
 
-# Rule to link object files into the final executable
-$(EXECUTABLE): $(OBJ_FILES)
-	$(CXX) $^ -o $@
+# Target: compile source files to object files
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Rule to compile source files into object files
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
-
-# Clean target to remove compiled files
+# Target: clean up generated files
 clean:
-	rm -f $(BIN_DIR)/*.o $(EXECUTABLE)
-
-# Phony targets
-.PHONY: all clean
+	rm -f *.o $(EXECUTABLE)
