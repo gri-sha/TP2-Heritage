@@ -180,3 +180,7 @@ void Catalogue::findPaths(const char *currentCity, const char *destinationCity, 
         }
     }
 }
+
+int Catalogue::getNbTrajets() const {
+    return nbTrajets;
+}

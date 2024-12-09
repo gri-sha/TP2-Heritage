@@ -47,6 +47,10 @@ public:
     // Contrat :
     //     Les noms des villes doivent etre des cstrings (dernier caractere '\0').
 
+    int getNbTrajets() const;
+    // Mode d'emploi :
+    //     Cette methode donne l'acces au parametre protege int nbTragets
+
 private:
     Trajet **catalogue; // Liste de pointeurs vers des trajets stockes dans le catalogue
     int capacite;       // Capacite actuelle de la memoire pour stocker les trajets

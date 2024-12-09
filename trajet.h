@@ -23,11 +23,11 @@ public:
     // Mode d'emploi :
     //     Cette fonction affiche les informations sur le trajet sous la forme : de A a B
 
-    char *getVilleDepart() const;
+    const char *getVilleDepart() const;
     // Mode d'emploi :
     //     Cette methode donne l'acces au parametre protege char *villeDep
 
-    char *getVilleArrivee() const;
+    const char *getVilleArrivee() const;
     // Mode d'emploi :
     //     Cette methode donne l'acces au parametre protege char *villeArr
 
