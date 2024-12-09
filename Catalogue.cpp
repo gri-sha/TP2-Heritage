@@ -2,14 +2,19 @@
 #include "catalogue.h"
 using namespace std;
 
-Catalogue::Catalogue()
-    : capacite(10), nbTrajets(0)
+Catalogue::Catalogue() : capacite(2), nbTrajets(0)
 {
+#ifdef MAP
+    cout << "Appel de constructeur : Catalogue" << endl;
+#endif
     catalogue = new Trajet *[capacite];
 }
 
 Catalogue::~Catalogue()
 {
+#ifdef MAP
+    cout << "Appel de destructeur : Catalague" << endl;
+#endif
     for (int i = 0; i < nbTrajets; ++i)
     {
         delete catalogue[i];
@@ -94,7 +99,7 @@ void Catalogue::rechercher(const char *villeDepart, const char *villeArrivee) co
     // ! The space for each path will be the same
     Trajet **currentPath = new Trajet *[nbTrajets]; // * list of pointers (to class Trajet)
     int length = 0;
-    int* lengths = new int[nbTrajets];
+    int *lengths = new int[nbTrajets];
     // ! THE SPACE FOR ARRAY CONTAINING ALL PATHS WILL BE ALLOCATED DYNAMIACALLY
     Trajet ***allPaths = nullptr; // * pointer to list of pointers (to class Trajet)
     int amount = 0;
@@ -110,12 +115,12 @@ void Catalogue::rechercher(const char *villeDepart, const char *villeArrivee) co
         cout << "Trajets trouves: " << amount << "\r\n";
         for (int i = 0; i < amount; ++i)
         {
-            cout << "Trajet " << i + 1 << " ("<< lengths[i] << " etapes) : ";
+            cout << "Trajet " << i + 1 << " (" << lengths[i] << " etapes) : ";
 
             for (int j = 0; j < lengths[i]; ++j)
             {
                 allPaths[i][j]->afficher();
-                
+
                 if (j < lengths[i] - 1)
                 {
                     cout << " -> ";

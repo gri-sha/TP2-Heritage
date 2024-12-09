@@ -4,6 +4,9 @@ using namespace std;
 
 TrajetCompose::TrajetCompose(const char *villeDep, const char *villeArr, TrajetSimple *pListTrajets[], int pNbTrajets) : Trajet(villeDep, villeArr)
 {
+#ifdef MAP
+    cout << "Appel de constructeur : TrajetComposee" << endl;
+#endif
     nbTrajets = pNbTrajets;
     listTrajets = new TrajetSimple *[nbTrajets];
 
@@ -15,6 +18,9 @@ TrajetCompose::TrajetCompose(const char *villeDep, const char *villeArr, TrajetS
 
 TrajetCompose::~TrajetCompose()
 {
+#ifdef MAP
+    cout << "Appel de destructeur : TrajetComposee" << endl;
+#endif
     for (int i = 0; i < nbTrajets; ++i)
     {
         delete listTrajets[i];
