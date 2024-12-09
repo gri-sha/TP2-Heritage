@@ -27,12 +27,12 @@ void Trajet::afficher() const
     cout << "de " << villeDep << " a " << villeArr << " ";
 }
 
-char *Trajet::getVilleDepart() const
+const char *Trajet::getVilleDepart() const
 {
     return villeDep;
 }
 
-char *Trajet::getVilleArrivee() const
+const char *Trajet::getVilleArrivee() const
 {
     return villeArr;
 }
