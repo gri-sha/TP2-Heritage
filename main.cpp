@@ -6,6 +6,7 @@
 #include "trajetCompose.h"
 using namespace std;
 
+#define SMALL_INPUT 3
 #define VILLE_MAX 50
 #define MOYEN_MAX 30
 #define MAX_NUM_LENGTH 10 // length of max int value if 32 bit
@@ -30,17 +31,22 @@ int main()
 {
     Catalogue catalogue;
     char choix;
+    char buffer[SMALL_INPUT];
     int status = 1;
 
     do
     {
         afficherMenu(status);
-        cin >> choix;
+        cin >> buffer;
         cin.ignore(STREAM_SIZE, '\n');
+        choix = buffer[0];
+        if (buffer[1] != '\0')
+        {
+            choix = 'A';  // there is no case for this value
+        }
 
         switch (choix)
         {
-
         // Ajouter un trajet simple
         case '1':
         {
