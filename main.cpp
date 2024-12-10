@@ -100,7 +100,7 @@ int main()
             {
                 char reponse;
             validate:
-                cout << "Vous etes sur(e)? (y/n)" << endl;
+                cout << "Etes vous sur(e)? (y/n)" << endl;
                 cin >> reponse;
                 cin.ignore(STREAM_SIZE, '\n');
                 if (reponse == 'n' or reponse == 'N')
