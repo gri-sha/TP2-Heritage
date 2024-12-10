@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include "catalogue.h"
 using namespace std;
 
