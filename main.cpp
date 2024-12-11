@@ -9,7 +9,7 @@ using namespace std;
 #define SMALL_INPUT 3
 #define VILLE_MAX 50
 #define MOYEN_MAX 30
-#define MAX_NUM_LENGTH 10 // length of max int value if 32 bit
+#define MAX_NUM_LENGTH 15 // length of max int value if 32 bit
 #define STREAM_SIZE 2048
 
 void afficherMenu(int status)
@@ -68,100 +68,40 @@ int main()
 
         // Ajouter un trajet compose
         case '2': {
-            char buffer[MAX_NUM_LENGTH];
-            int nbSousTrajets = 0;
 
-            do {
-                cout << "Nombre de sous-trajets : ";
-                cin >> buffer;
+            char villeDep[VILLE_MAX], villeArr[VILLE_MAX];
+            char villeDep_sousTrajet[VILLE_MAX], villeArr_sousTrajet[VILLE_MAX], moyen_sousTrajet[MOYEN_MAX];
+            int nbTrajets = 0;
+            TrajetSimple** listeTrajetsSimples = new TrajetSimple*[MAX_NUM_LENGTH];
+
+            cout << "Entrez la ville de depart : ";
+            cin >> villeDep_sousTrajet;
+            cin.ignore(STREAM_SIZE, '\n');
+            strcpy(villeDep, villeDep_sousTrajet);
+            
+            bool stop_saisie = false;
+            char reponse;
+            while (!stop_saisie)
+            {
+                cout << "Entrez la ville de l'etape suivante : ";
+                cin >> villeArr_sousTrajet;
                 cin.ignore(STREAM_SIZE, '\n');
-
-                nbSousTrajets = 0;
-                int ord = 1;
-                for (int i = strlen(buffer) - 1; i >= 0; i--) {
-                    if (buffer[i] - '0' <= 9) {
-                        nbSousTrajets += (buffer[i] - '0') * ord;
-                        ord *= 10;
-                    } else {
-                        nbSousTrajets = 0;
-                        break;
-                    }
+                cout << "Entrez le moyen de transport envisage pour cette etape : ";
+                cin >> moyen_sousTrajet;
+                cin.ignore(STREAM_SIZE, '\n');
+                cout<<"Voulez-vous ajouter une etape ? (y/n)";
+                cin >> reponse;
+                if (reponse == 'n' || reponse == 'N') 
+                {
+                    stop_saisie=true;
                 }
-
-                if (nbSousTrajets <= 1) {
-                    cout << "Valeur Invalide! Tapez un nombre > 1" << endl;
-                }
-            } while (nbSousTrajets <= 1);
-
-            if (nbSousTrajets > 10) {
-                char reponse;
-                bool valide = false;
-                do {
-                    cout << "Etes vous sur(e)? (y/n)" << endl;
-                    cin >> reponse;
-                    cin.ignore(STREAM_SIZE, '\n');
-                    if (reponse == 'n' || reponse == 'N') {
-                        do {
-                            cout << "Nombre de sous-trajets : ";
-                            cin >> buffer;
-                            cin.ignore(STREAM_SIZE, '\n');
-
-                            nbSousTrajets = 0;
-                            int ord = 1;
-                            for (int i = strlen(buffer) - 1; i >= 0; i--) {
-                                if (buffer[i] - '0' <= 9) {
-                                    nbSousTrajets += (buffer[i] - '0') * ord;
-                                    ord *= 10;
-                                } else {
-                                    nbSousTrajets = 0;
-                                    break;
-                                }
-                            }
-
-                            if (nbSousTrajets <= 1) {
-                                cout << "Valeur Invalide! Tapez un nombre > 1" << endl;
-                            }
-                        } while (nbSousTrajets <= 1);
-                    } else if (reponse == 'y' || reponse == 'Y') {
-                        valide = true;
-                    }
-                } while (!valide);
+                listeTrajetsSimples[nbTrajets] = new TrajetSimple(villeDep_sousTrajet, villeArr_sousTrajet, moyen_sousTrajet);
+                ++nbTrajets;
+                strcpy(villeDep_sousTrajet, villeArr_sousTrajet);
             }
 
-            char villeDepPrincipale[VILLE_MAX], villeArrPrincipale[VILLE_MAX];
-            TrajetSimple **sousTrajets = new TrajetSimple *[nbSousTrajets];
-            for (int i = 0; i < nbSousTrajets; ++i) {
-                char villeDep[VILLE_MAX], villeArr[VILLE_MAX], moyen[MOYEN_MAX];
-                bool valideSousTrajet = false;
-
-                while (!valideSousTrajet) {
-                    cout << "Sous-trajet " << i + 1 << " - Ville de depart : ";
-                    cin >> villeDep;
-                    cin.ignore(STREAM_SIZE, '\n');
-                    if (i == 0)
-                        strcpy(villeDepPrincipale, villeDep);
-
-                    cout << "Sous-trajet " << i + 1 << " - Ville d'arrivee : ";
-                    cin >> villeArr;
-                    cin.ignore(STREAM_SIZE, '\n');
-                    if (i == nbSousTrajets - 1)
-                        strcpy(villeArrPrincipale, villeArr);
-
-                    cout << "Sous-trajet " << i + 1 << " - Moyen de transport : ";
-                    cin >> moyen;
-                    cin.ignore(STREAM_SIZE, '\n');
-
-                    if (i > 0 && strcmp(sousTrajets[i - 1]->getVilleArrivee(), villeDep) != 0) {
-                        cout << "Ville d'arrivee et ville de depart non coherents!" << endl;
-                    } else {
-                        sousTrajets[i] = new TrajetSimple(villeDep, villeArr, moyen);
-                        valideSousTrajet = true;
-                    }
-                }
-            }
-
-            catalogue.ajouterTrajet(new TrajetCompose(villeDepPrincipale, villeArrPrincipale, sousTrajets, nbSousTrajets));
-            cout << "Trajet compose ajoute !" << "\r\n";
+            TrajetCompose *trajetCompose = new TrajetCompose(villeDep, villeArr, listeTrajetsSimples, nbTrajets);
+            catalogue.ajouterTrajet(trajetCompose);
             status = 1;
             break;
         }
