@@ -23,5 +23,5 @@ TrajetSimple::~TrajetSimple()
 void TrajetSimple::afficher() const
 {
     Trajet::afficher();
-    cout << "en " << moyen << " ";
+    cout << "en " << moyen;
 }
