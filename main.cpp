@@ -67,84 +67,97 @@ int main()
         }
 
         // Ajouter un trajet compose
-        case '2':
-        {
+        case '2': {
             char buffer[MAX_NUM_LENGTH];
-        enter_nombre:
-            cout << "Nombre de sous-trajets : ";
-            cin >> buffer;
-            cin.ignore(STREAM_SIZE, '\n');
             int nbSousTrajets = 0;
-            int ord = 1;
-            for (int i = strlen(buffer) - 1; i >= 0; i--)
-            {
-                if (buffer[i] - '0' <= 9)
-                {
-                    nbSousTrajets += (buffer[i] - '0') * ord;
-                    ord *= 10;
-                }
-                else
-                {
-                    nbSousTrajets = 0;
-                    break;
-                }
-            }
 
-            if (nbSousTrajets <= 1)
-            {
-                cout << "Valeur Invalide! Tapez un nombre > 1" << endl;
-                goto enter_nombre;
-            }
-
-            if (nbSousTrajets > 10)
-            {
-                char reponse;
-            validate:
-                cout << "Etes vous sur(e)? (y/n)" << endl;
-                cin >> reponse;
+            do {
+                cout << "Nombre de sous-trajets : ";
+                cin >> buffer;
                 cin.ignore(STREAM_SIZE, '\n');
-                if (reponse == 'n' or reponse == 'N')
-                {
-                    goto enter_nombre;
+
+                nbSousTrajets = 0;
+                int ord = 1;
+                for (int i = strlen(buffer) - 1; i >= 0; i--) {
+                    if (buffer[i] - '0' <= 9) {
+                        nbSousTrajets += (buffer[i] - '0') * ord;
+                        ord *= 10;
+                    } else {
+                        nbSousTrajets = 0;
+                        break;
+                    }
                 }
-                else if (reponse == 'y' or reponse == 'Y')
-                {
+
+                if (nbSousTrajets <= 1) {
+                    cout << "Valeur Invalide! Tapez un nombre > 1" << endl;
                 }
-                else
-                {
-                    goto validate;
-                }
+            } while (nbSousTrajets <= 1);
+
+            if (nbSousTrajets > 10) {
+                char reponse;
+                bool valide = false;
+                do {
+                    cout << "Etes vous sur(e)? (y/n)" << endl;
+                    cin >> reponse;
+                    cin.ignore(STREAM_SIZE, '\n');
+                    if (reponse == 'n' || reponse == 'N') {
+                        do {
+                            cout << "Nombre de sous-trajets : ";
+                            cin >> buffer;
+                            cin.ignore(STREAM_SIZE, '\n');
+
+                            nbSousTrajets = 0;
+                            int ord = 1;
+                            for (int i = strlen(buffer) - 1; i >= 0; i--) {
+                                if (buffer[i] - '0' <= 9) {
+                                    nbSousTrajets += (buffer[i] - '0') * ord;
+                                    ord *= 10;
+                                } else {
+                                    nbSousTrajets = 0;
+                                    break;
+                                }
+                            }
+
+                            if (nbSousTrajets <= 1) {
+                                cout << "Valeur Invalide! Tapez un nombre > 1" << endl;
+                            }
+                        } while (nbSousTrajets <= 1);
+                    } else if (reponse == 'y' || reponse == 'Y') {
+                        valide = true;
+                    }
+                } while (!valide);
             }
 
             char villeDepPrincipale[VILLE_MAX], villeArrPrincipale[VILLE_MAX];
             TrajetSimple **sousTrajets = new TrajetSimple *[nbSousTrajets];
-            for (int i = 0; i < nbSousTrajets; ++i)
-            {
+            for (int i = 0; i < nbSousTrajets; ++i) {
                 char villeDep[VILLE_MAX], villeArr[VILLE_MAX], moyen[MOYEN_MAX];
-            rewrite:
-                cout << "Sous-trajet " << i + 1 << " - Ville de depart : ";
-                cin >> villeDep;
-                cin.ignore(STREAM_SIZE, '\n');
-                if (i == 0)
-                    strcpy(villeDepPrincipale, villeDep);
+                bool valideSousTrajet = false;
 
-                cout << "Sous-trajet " << i + 1 << " - Ville d'arrivee : ";
-                cin >> villeArr;
-                cin.ignore(STREAM_SIZE, '\n');
-                if (i == nbSousTrajets - 1)
-                    strcpy(villeArrPrincipale, villeArr);
+                while (!valideSousTrajet) {
+                    cout << "Sous-trajet " << i + 1 << " - Ville de depart : ";
+                    cin >> villeDep;
+                    cin.ignore(STREAM_SIZE, '\n');
+                    if (i == 0)
+                        strcpy(villeDepPrincipale, villeDep);
 
-                cout << "Sous-trajet " << i + 1 << " - Moyen de transport : ";
-                cin >> moyen;
-                cin.ignore(STREAM_SIZE, '\n');
+                    cout << "Sous-trajet " << i + 1 << " - Ville d'arrivee : ";
+                    cin >> villeArr;
+                    cin.ignore(STREAM_SIZE, '\n');
+                    if (i == nbSousTrajets - 1)
+                        strcpy(villeArrPrincipale, villeArr);
 
-                if (i > 0 and strcmp(sousTrajets[i - 1]->getVilleArrivee(), villeDep) != 0)
-                {
-                    cout << "Ville d'arrivee et ville de depart non coherents!" << endl;
-                    goto rewrite;
+                    cout << "Sous-trajet " << i + 1 << " - Moyen de transport : ";
+                    cin >> moyen;
+                    cin.ignore(STREAM_SIZE, '\n');
+
+                    if (i > 0 && strcmp(sousTrajets[i - 1]->getVilleArrivee(), villeDep) != 0) {
+                        cout << "Ville d'arrivee et ville de depart non coherents!" << endl;
+                    } else {
+                        sousTrajets[i] = new TrajetSimple(villeDep, villeArr, moyen);
+                        valideSousTrajet = true;
+                    }
                 }
-
-                sousTrajets[i] = new TrajetSimple(villeDep, villeArr, moyen);
             }
 
             catalogue.ajouterTrajet(new TrajetCompose(villeDepPrincipale, villeArrPrincipale, sousTrajets, nbSousTrajets));
@@ -154,49 +167,47 @@ int main()
         }
 
         // Supprimer un trajet
-        case '3':
-        {
-            if (catalogue.getNbTrajets() == 0)
-            {
+        case '3': {
+            if (catalogue.getNbTrajets() == 0) {
                 cout << "Le catalogue est vide. Il n'est pas possible de supprimer un trajet." << endl;
                 break;
             }
+
             char buffer[MAX_NUM_LENGTH];
-        enter_index:
-            cout << "Index du trajet a supprimer (les numeros de trajets sont ceux du catalogue) : ";
-            cin >> buffer;
-            cin.ignore(STREAM_SIZE, '\n');
+            bool suppressionReussie = false;
 
-            int index = 0;
-            int ord = 1;
-            for (int i = strlen(buffer) - 1; i >= 0; i--)
-            {
-                if (buffer[i] - '0' <= 9)
-                {
-                    index += (buffer[i] - '0') * ord;
-                    ord *= 10;
+            while (!suppressionReussie) {
+                cout << "Index du trajet a supprimer (les numeros de trajets sont ceux du catalogue) : ";
+                cin >> buffer;
+                cin.ignore(STREAM_SIZE, '\n');
+
+                int index = 0;
+                int ord = 1;
+                for (int i = strlen(buffer) - 1; i >= 0; i--) {
+                    if (buffer[i] - '0' <= 9) {
+                        index += (buffer[i] - '0') * ord;
+                        ord *= 10;
+                    }
                 }
-            }
 
-            if (catalogue.supprimerTrajet(index))
-            {
-                cout << "Trajet supprime avec succes." << "\r\n";
-            }
-            else
-            {
-                cout << "Erreur : index invalide." << "\r\n";
-                goto enter_index;
+                if (catalogue.supprimerTrajet(index)) {
+                    cout << "Trajet supprime avec succes." << "\r\n";
+                    suppressionReussie = true;
+                } else {
+                    cout << "Erreur : index invalide." << "\r\n";
+                }
             }
             status = 1;
             break;
         }
+
 
         // Afficher le catalogue
         case '4':
         {
             if (catalogue.getNbTrajets() == 0)
             {
-                cout << "Le catalogue est vide. Il n'est pas possible de supprimer un trajet." << endl;
+                cout << "Le catalogue est vide." << endl;
                 break;
             }
             cout << "Catalogue actuel :" << "\r\n";
