@@ -1,7 +1,7 @@
 ## Commandes utiles :
 ```bash
-make -f makeFile
+make
 ```
 ```bash
-./bin/trajets
+.trajets
 ```
