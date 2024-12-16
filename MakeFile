@@ -3,7 +3,7 @@ CXXFLAGS = -c -Wall -std=c++11 -DMAP
 
 SRC_FILES = main.cpp trajet.cpp trajetSimple.cpp trajetCompose.cpp catalogue.cpp
 BIN_DIR = bin
-EXECUTABLE = $(BIN_DIR)/trajets
+EXECUTABLE = ./trajets
 
 # Generation of object file names
 OBJ_FILES = $(SRC_FILES:%.cpp=$(BIN_DIR)/%.o)
