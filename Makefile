@@ -22,5 +22,6 @@ $(BIN_DIR)/%.o: %.cpp
 
 clean:
 	rm -rf $(BIN_DIR)
+	rm -rf $(EXECUTABLE)
 
 .PHONY: all clean
