@@ -3,5 +3,5 @@
 make
 ```
 ```bash
-.trajets
+./trajets
 ```

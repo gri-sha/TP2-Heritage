@@ -4,7 +4,7 @@
 #include "trajetSimple.h"
 #include <cstring>
 #include <iostream>
-#include <limits>
+// #include <limits>
 using namespace std;
 
 // Input constants
@@ -12,7 +12,8 @@ using namespace std;
 #define MAX_NUM_LENGTH 11                             // length of max int value if 32 bit (we could use small input instead, but we leave it for future)
 #define VILLE_MAX 50                                  // max length of city name
 #define MOYEN_MAX 30                                  // max length of transport name
-#define STREAM_SIZE numeric_limits<streamsize>::max() // standert max length of line input
+// #define STREAM_SIZE numeric_limits<streamsize>::max() // standert max length of line input
+#define STREAM_SIZE 2048
 
 // Catalogue constants
 #define START_AMOUNT_TR 30 // max number of sub trips in a trip (rewrite fully dynamically)
